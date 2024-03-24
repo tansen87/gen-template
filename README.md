@@ -6,6 +6,9 @@
 
 - Python3.8-3.11
 
+### 截图
+![image](https://github.com/tansen87/gen-template/assets/98570790/a611d9ca-383a-415d-85ff-ecbe66ba943f)
+
 ### 初始化
 
 ```shell
