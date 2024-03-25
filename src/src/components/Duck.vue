@@ -1,83 +1,146 @@
 <template>
-  <div class="q-pa-md">
-    <q-option-group
-      v-model="separator"
-      inline
-      class="q-mb-md"
-      :options="separatorOptions"
-    />
+  <div
+    class="q-pa-md"
+    style="display: flex; justify-content: space-between; max-width: 1500px; margin: 0 auto"
+  >
+    <!-- column 1 -->
+    <div class="q-gutter-y-md" style="flex-basis: 23%; max-width: 350px">
+      <q-input color="teal" v-model="input.tableName" label="Table Name">
+        <template v-slot:prepend>
+          <q-icon name="cloud" />
+        </template>
+      </q-input>
+    </div>
 
-    <q-markup-table :separator="separator" flat bordered>
-      <thead>
-        <tr>
-          <th class="text-left">Dessert (100g serving)</th>
-          <th class="text-right">Calories</th>
-          <th class="text-right">Fat (g)</th>
-          <th class="text-right">Carbs (g)</th>
-          <th class="text-right">Protein (g)</th>
-          <th class="text-right">Sodium (mg)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="text-left">Frozen Yogurt</td>
-          <td class="text-right">159</td>
-          <td class="text-right">6</td>
-          <td class="text-right">24</td>
-          <td class="text-right">4</td>
-          <td class="text-right">87</td>
-        </tr>
-        <tr>
-          <td class="text-left">Ice cream sandwich</td>
-          <td class="text-right">237</td>
-          <td class="text-right">9</td>
-          <td class="text-right">37</td>
-          <td class="text-right">4.3</td>
-          <td class="text-right">129</td>
-        </tr>
-        <tr>
-          <td class="text-left">Eclair</td>
-          <td class="text-right">262</td>
-          <td class="text-right">16</td>
-          <td class="text-right">23</td>
-          <td class="text-right">6</td>
-          <td class="text-right">337</td>
-        </tr>
-        <tr>
-          <td class="text-left">Cupcake</td>
-          <td class="text-right">305</td>
-          <td class="text-right">3.7</td>
-          <td class="text-right">67</td>
-          <td class="text-right">4.3</td>
-          <td class="text-right">413</td>
-        </tr>
-        <tr>
-          <td class="text-left">Gingerbread</td>
-          <td class="text-right">356</td>
-          <td class="text-right">16</td>
-          <td class="text-right">49</td>
-          <td class="text-right">3.9</td>
-          <td class="text-right">327</td>
-        </tr>
-      </tbody>
-    </q-markup-table>
+    <!-- column 2 -->
+    <div class="q-gutter-y-md" style="flex-basis: 23%; max-width: 350px">
+      <q-input color="teal">
+        <template v-slot:prepend>
+          <q-select
+            v-model="input.sep"
+            :options="sepOptions"
+            label="Separator"
+            style="width: 145px"
+          />
+          <q-select
+            v-model="input.encoding"
+            :options="encodingOptions"
+            label="Encoding"
+            style="width: 145px"
+          />
+        </template>
+      </q-input>
+    </div>
+
+    <!-- column 3 -->
+    <div class="q-gutter-y-md" style="flex-basis: 23%; max-width: 350px">
+      <q-input color="teal">
+        <template v-slot:prepend>
+          <q-btn color="primary" label="open file" @click="openFile" style="width: 145px" />
+          <q-btn color="secondary" label="write" @click="createDB" style="width: 145px" />
+        </template>
+      </q-input>
+    </div>
+
+    <!-- column 4 -->
+    <div class="q-gutter-y-md" style="flex-basis: 23%; max-width: 350px">
+      <q-input color="teal">
+        <template v-slot:prepend> </template>
+      </q-input>
+    </div>
+  </div>
+
+  <div
+    class="q-pa-md"
+    style="display: flex; justify-content: space-between; max-width: 1500px; margin: 0 auto"
+  >
+    <q-table
+      :rows="tableData"
+      :columns="columns"
+      row-key="name"
+      binary-state-sort
+      style="height: 355px; width: 100%"
+    >
+    </q-table>
   </div>
 </template>
 
-<script>
-import { ref } from "vue";
+<script setup>
+import { ref, reactive } from 'vue'
+import { useQuasar, Notify } from 'quasar'
 
-export default {
-  setup() {
-    return {
-      separator: ref("vertical"),
-      separatorOptions: [
-        { label: "Horizontal", value: "horizontal" },
-        { label: "Vertical", value: "vertical" },
-        { label: "Cell", value: "cell" },
-        { label: "None", value: "none" },
-      ],
-    };
-  },
-};
+const $q = useQuasar()
+
+const tableData = ref([])
+const columns = ref([])
+const input = reactive({
+  tableName: 'duck',
+  sep: ',',
+  encoding: 'utf-8'
+})
+const sepOptions = [',', '|', '\\t', ';']
+const encodingOptions = ['utf-8', 'utf_8_sig', 'utf-16le', 'gbk']
+
+// 打开文件
+function openFile() {
+  try {
+    window.pywebview.api.duck_open_file(input.sep, input.encoding).then((res) => {
+      const jsData = JSON.parse(res)
+      columns.value = Object.keys(jsData[0]).map((key) => ({ name: key, label: key, field: key }))
+      tableData.value = jsData
+    })
+  } catch (err) {
+    Notify.create({
+      message: err.message,
+      color: 'negative',
+      icon: 'sentiment_very_dissatisfied',
+      position: 'top-right',
+      spinner: false,
+      timeout: 3000
+    })
+  }
+}
+
+// 创建duckdb
+async function createDB() {
+  const notif = $q.notify({
+    color: 'info',
+    icon: 'info',
+    position: 'top-right',
+    group: false,
+    timeout: 0,
+    spinner: true,
+    message: 'writing...'
+  })
+  await window.pywebview.api.duck_create_db(input.sep, input.tableName).then((res) => {
+    if (typeof res === 'string' && res.includes('Error')) {
+      notif({
+        message: res,
+        color: 'negative',
+        icon: 'sentiment_very_dissatisfied',
+        position: 'top-right',
+        spinner: false,
+        timeout: 3000
+      })
+    } else if (res && typeof res === 'number') {
+      notif({
+        message: 'write success: ' + res.toString(),
+        color: 'positive',
+        icon: 'sentiment_satisfied_alt',
+        position: 'top-right',
+        spinner: false,
+        timeout: 2000
+      })
+    } else {
+      notif({
+        message: res.toString(),
+        color: 'negative',
+        icon: 'sentiment_very_dissatisfied',
+        position: 'top-right',
+        spinner: false,
+        timeout: 2000
+      })
+    }
+  })
+}
 </script>
