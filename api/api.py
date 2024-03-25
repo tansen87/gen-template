@@ -13,3 +13,4 @@ class API(Panda, Duck):
     def setWindow(self, window):
         """ 获取窗口实例 """
         Panda.window = window
+        Duck.window = window

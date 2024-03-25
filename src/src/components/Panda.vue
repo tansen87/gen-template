@@ -1,18 +1,36 @@
 <template>
-  <div class="q-pa-md" style="display: flex; justify-content: space-between; max-width: 1500px; margin: 0 auto">
+  <div
+    class="q-pa-md"
+    style="display: flex; justify-content: space-between; max-width: 1500px; margin: 0 auto"
+  >
     <!-- column 1 -->
     <div class="q-gutter-y-md" style="flex-basis: 23%; max-width: 350px">
       <q-input color="teal" v-model="input.entity" label="Entity">
         <template v-slot:prepend>
           <q-icon name="room" />
-          <q-select v-model="input.entitySelect" :options="entitySelectOptions" label="mode" style="width: 70px" />
-          <q-select v-model="input.entityLang" :options="entityLangOptions" label="lang" style="width: 60px" />
+          <q-select
+            v-model="input.entitySelect"
+            :options="entitySelectOptions"
+            label="mode"
+            style="width: 70px"
+          />
+          <q-select
+            v-model="input.entityLang"
+            :options="entityLangOptions"
+            label="lang"
+            style="width: 60px"
+          />
         </template>
       </q-input>
       <q-input color="teal" v-model="input.dateEffective" label="Date Effective">
         <template v-slot:prepend>
           <q-icon name="timer" />
-          <q-select v-model="input.dateSelect" :options="dateSelectOptions" label="mode" style="width: 70px" />
+          <q-select
+            v-model="input.dateSelect"
+            :options="dateSelectOptions"
+            label="mode"
+            style="width: 70px"
+          />
         </template>
       </q-input>
       <q-input color="teal" v-model="input.lineDesciption" label="Line Desciption">
@@ -23,7 +41,12 @@
       <q-input color="teal" v-model="input.currency" label="Currency">
         <template v-slot:prepend>
           <q-icon name="attach_money" />
-          <q-select v-model="input.currencySelect" :options="currencySelectOptions" label="mode" style="width: 70px" />
+          <q-select
+            v-model="input.currencySelect"
+            :options="currencySelectOptions"
+            label="mode"
+            style="width: 70px"
+          />
         </template>
       </q-input>
     </div>
@@ -33,25 +56,50 @@
       <q-input color="teal" v-model="input.company" label="Company Name">
         <template v-slot:prepend>
           <q-icon name="room" />
-          <q-select v-model="input.companySelect" :options="companySelectOptions" label="mode" style="width: 80px" />
+          <q-select
+            v-model="input.companySelect"
+            :options="companySelectOptions"
+            label="mode"
+            style="width: 80px"
+          />
         </template>
       </q-input>
       <q-input color="teal" v-model="input.dateEntered" label="Date Entered">
         <template v-slot:prepend>
           <q-icon name="timer" />
-          <q-select v-model="input.dateSelect" :options="dateSelectOptions" label="mode" style="width: 70px" />
+          <q-select
+            v-model="input.dateSelect"
+            :options="dateSelectOptions"
+            label="mode"
+            style="width: 70px"
+          />
         </template>
       </q-input>
       <q-input color="teal" v-model="input.amount" label="Amount">
         <template v-slot:prepend>
           <q-icon name="account_balance_wallet" />
-          <q-select v-model="input.amountSelect" :options="amountSelectOptions" label="mode" style="width: 70px" />
+          <q-select
+            v-model="input.amountSelect"
+            :options="amountSelectOptions"
+            label="mode"
+            style="width: 70px"
+          />
         </template>
       </q-input>
       <q-input color="teal" label="Amount">
         <template v-slot:prepend>
-          <q-select v-model="input.ami" :options="amiSelectOptions" label="Auto Manual Interface" style="width: 175px" />
-          <q-select v-model="input.entityNumber" :options="entityNumberOptions" label="Number of entities" style="width: 175px" />
+          <q-select
+            v-model="input.ami"
+            :options="amiSelectOptions"
+            label="Auto Manual Interface"
+            style="width: 175px"
+          />
+          <q-select
+            v-model="input.entityNumber"
+            :options="entityNumberOptions"
+            label="Number of entities"
+            style="width: 175px"
+          />
         </template>
       </q-input>
     </div>
@@ -61,14 +109,29 @@
       <q-input color="teal" v-model="input.journalNumber" label="Journal Number">
         <template v-slot:prepend>
           <q-icon name="loyalty" />
-          <q-select v-model="input.jnConnect" :options="jnConnectOptions" label="connect" style="width: 80px" />
+          <q-select
+            v-model="input.jnConnect"
+            :options="jnConnectOptions"
+            label="connect"
+            style="width: 80px"
+          />
         </template>
       </q-input>
       <q-input color="teal" v-model="input.userEnterd" label="User Enterd">
         <template v-slot:prepend>
           <q-icon name="people" />
-          <q-select v-model="input.userSelect" :options="userSelectOptions" label="mode" style="width: 70px" />
-          <q-select v-model="input.userLang" :options="userLangOptions" label="lang" style="width: 60px" />
+          <q-select
+            v-model="input.userSelect"
+            :options="userSelectOptions"
+            label="mode"
+            style="width: 70px"
+          />
+          <q-select
+            v-model="input.userLang"
+            :options="userLangOptions"
+            label="lang"
+            style="width: 60px"
+          />
         </template>
       </q-input>
       <q-input color="teal" v-model="input.account" label="Account Number">
@@ -78,8 +141,18 @@
       </q-input>
       <q-input color="teal">
         <template v-slot:prepend>
-          <q-select v-model="input.sep" :options="sepOptions" label="Separator" style="width: 175px" />
-          <q-select v-model="input.encoding" :options="encodingOptions" label="Encoding" style="width: 175px" />
+          <q-select
+            v-model="input.sep"
+            :options="sepOptions"
+            label="Separator"
+            style="width: 175px"
+          />
+          <q-select
+            v-model="input.encoding"
+            :options="encodingOptions"
+            label="Encoding"
+            style="width: 175px"
+          />
         </template>
       </q-input>
     </div>
@@ -94,8 +167,18 @@
       <q-input color="teal" v-model="input.userUpdated" label="User Updated">
         <template v-slot:prepend>
           <q-icon name="people" />
-          <q-select v-model="input.userSelect" :options="userSelectOptions" label="mode" style="width: 70px" />
-          <q-select v-model="input.userLang" :options="userLangOptions" label="lang" style="width: 60px" />
+          <q-select
+            v-model="input.userSelect"
+            :options="userSelectOptions"
+            label="mode"
+            style="width: 70px"
+          />
+          <q-select
+            v-model="input.userLang"
+            :options="userLangOptions"
+            label="lang"
+            style="width: 60px"
+          />
         </template>
       </q-input>
       <q-input color="teal" v-model="input.accountDescription" label="Account Description">
@@ -112,8 +195,18 @@
     </div>
   </div>
 
-  <div class="q-pa-md" style="display: flex; justify-content: space-between; max-width: 1500px; margin: 0 auto">
-    <q-table :rows="tableData" :columns="columns" row-key="name" binary-state-sort style="height: 355px; width: 100%"> </q-table>
+  <div
+    class="q-pa-md"
+    style="display: flex; justify-content: space-between; max-width: 1500px; margin: 0 auto"
+  >
+    <q-table
+      :rows="tableData"
+      :columns="columns"
+      row-key="name"
+      binary-state-sort
+      style="height: 355px; width: 100%"
+    >
+    </q-table>
   </div>
 </template>
 
@@ -185,10 +278,37 @@ async function process() {
     group: false,
     timeout: 0,
     spinner: true,
-    message: 'running...',
+    message: 'running...'
   })
   try {
-    const res = await window.pywebview.api.panda_process(input.entity, input.entitySelect, input.entityLang, input.company, input.companySelect, input.journalNumber, input.jnConnect, input.journalType, input.dateEffective, input.dateEntered, input.dateSelect, input.userEnterd, input.userUpdated, input.userSelect, input.userLang, input.lineDesciption, input.amount, input.amountSelect, input.account, input.accountDescription, input.currency, input.currencySelect, input.ami, input.entityNumber, input.sep, input.encoding);
+    const res = await window.pywebview.api.panda_process(
+      input.entity,
+      input.entitySelect,
+      input.entityLang,
+      input.company,
+      input.companySelect,
+      input.journalNumber,
+      input.jnConnect,
+      input.journalType,
+      input.dateEffective,
+      input.dateEntered,
+      input.dateSelect,
+      input.userEnterd,
+      input.userUpdated,
+      input.userSelect,
+      input.userLang,
+      input.lineDesciption,
+      input.amount,
+      input.amountSelect,
+      input.account,
+      input.accountDescription,
+      input.currency,
+      input.currencySelect,
+      input.ami,
+      input.entityNumber,
+      input.sep,
+      input.encoding
+    )
     if (typeof res === 'string' && res.includes('Error')) {
       notif({
         message: res,

@@ -6,8 +6,8 @@ usage: 调用window.pywebview.api.<methodname>(<parameters>)从Javascript执行
 import os
 import time
 import json
-from datetime import datetime
 from typing import Union
+from datetime import datetime
 # import traceback
 
 import webview
@@ -15,7 +15,6 @@ import numpy as np
 import pandas as pd
 from pypinyin import lazy_pinyin, pinyin, Style
 
-# from src_py.config.config import Config
 from src_py.config.log import Log
 
 

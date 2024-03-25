@@ -1,5 +1,8 @@
 <template>
-  <div class="q-pa-md" style="display: flex; justify-content: space-between; max-width: 1000px; margin: 0 auto">
+  <div
+    class="q-pa-md"
+    style="display: flex; justify-content: space-between; max-width: 1000px; margin: 0 auto"
+  >
     <!-- column 1 -->
     <div class="q-gutter-y-md" style="flex-basis: 46%; max-width: 300px">
       <q-input color="teal" outlined v-model="input.replCols" label="Columns-replace char">
@@ -12,7 +15,12 @@
           <q-icon name="cloud" />
         </template>
       </q-input>
-      <q-input color="teal" outlined v-model="input.replSfCols" label="Columns-replace specific char">
+      <q-input
+        color="teal"
+        outlined
+        v-model="input.replSfCols"
+        label="Columns-replace specific char"
+      >
         <template v-slot:prepend>
           <q-icon name="cloud" />
         </template>
@@ -26,16 +34,30 @@
           <q-icon name="arrow_right" />
           <q-input color="primary" label="old char" v-model="input.oldChar" style="width: 135px" />
           <q-icon name="arrow_right" />
-          <q-input color="secondary" label="new char" v-model="input.newChar" style="width: 135px" />
+          <q-input
+            color="secondary"
+            label="new char"
+            v-model="input.newChar"
+            style="width: 135px"
+          />
         </template>
       </q-input>
       <q-input color="teal">
         <template v-slot:prepend>
-          <q-select v-model="input.sep" :options="sepOptions" label="Separator" style="width: 145px" />
-          <q-select v-model="input.encoding" :options="encodingOptions" label="Encoding" style="width: 145px" />
+          <q-select
+            v-model="input.sep"
+            :options="sepOptions"
+            label="Separator"
+            style="width: 145px"
+          />
+          <q-select
+            v-model="input.encoding"
+            :options="encodingOptions"
+            label="Encoding"
+            style="width: 145px"
+          />
         </template>
       </q-input>
-      
     </div>
 
     <!-- column 3 -->
@@ -61,8 +83,18 @@
     </div>
   </div>
 
-  <div class="q-pa-md" style="display: flex; justify-content: space-between; max-width: 1000px; margin: 0 auto">
-    <q-table :rows="tableData" :columns="columns" row-key="name" binary-state-sort style="height: 355px; width: 100%"> </q-table>
+  <div
+    class="q-pa-md"
+    style="display: flex; justify-content: space-between; max-width: 1000px; margin: 0 auto"
+  >
+    <q-table
+      :rows="tableData"
+      :columns="columns"
+      row-key="name"
+      binary-state-sort
+      style="height: 355px; width: 100%"
+    >
+    </q-table>
   </div>
 </template>
 
@@ -106,36 +138,38 @@ async function cn2pinyin() {
     spinner: true,
     message: 'chinese 2 pinyin...'
   })
-  await window.pywebview.api.panda_cn2pinyin(input.cn2pinyinCols, input.sep, input.encoding).then((res) => {
-    if (typeof res === 'string' && res.includes('Error')) {
-      notif({
-        message: res,
-        color: 'negative',
-        icon: 'sentiment_very_dissatisfied',
-        position: 'top-right',
-        spinner: false,
-        timeout: 3000
-      })
-    } else if (res && typeof res === 'number') {
-      notif({
-        message: res.toString(),
-        color: 'positive',
-        icon: 'sentiment_satisfied_alt',
-        position: 'top-right',
-        spinner: false,
-        timeout: 2000
-      })
-    } else {
-      notif({
-        message: res.toString(),
-        color: 'negative',
-        icon: 'sentiment_very_dissatisfied',
-        position: 'top-right',
-        spinner: false,
-        timeout: 2000
-      })
-    }
-  })
+  await window.pywebview.api
+    .panda_cn2pinyin(input.cn2pinyinCols, input.sep, input.encoding)
+    .then((res) => {
+      if (typeof res === 'string' && res.includes('Error')) {
+        notif({
+          message: res,
+          color: 'negative',
+          icon: 'sentiment_very_dissatisfied',
+          position: 'top-right',
+          spinner: false,
+          timeout: 3000
+        })
+      } else if (res && typeof res === 'number') {
+        notif({
+          message: res.toString(),
+          color: 'positive',
+          icon: 'sentiment_satisfied_alt',
+          position: 'top-right',
+          spinner: false,
+          timeout: 2000
+        })
+      } else {
+        notif({
+          message: res.toString(),
+          color: 'negative',
+          icon: 'sentiment_very_dissatisfied',
+          position: 'top-right',
+          spinner: false,
+          timeout: 2000
+        })
+      }
+    })
 }
 
 // 替换特殊符号
@@ -149,36 +183,38 @@ async function replChar() {
     spinner: true,
     message: 'repalce char...'
   })
-  await window.pywebview.api.panda_repl_char(input.replCols, input.sep, input.encoding).then((res) => {
-    if (typeof res === 'string' && res.includes('Error')) {
-      notif({
-        message: res,
-        color: 'negative',
-        icon: 'sentiment_very_dissatisfied',
-        position: 'top-right',
-        spinner: false,
-        timeout: 3000
-      })
-    } else if (res && typeof res === 'number') {
-      notif({
-        message: res.toString(),
-        color: 'positive',
-        icon: 'sentiment_satisfied_alt',
-        position: 'top-right',
-        spinner: false,
-        timeout: 2000
-      })
-    } else {
-      notif({
-        message: res.toString(),
-        color: 'negative',
-        icon: 'sentiment_very_dissatisfied',
-        position: 'top-right',
-        spinner: false,
-        timeout: 2000
-      })
-    }
-  })
+  await window.pywebview.api
+    .panda_repl_char(input.replCols, input.sep, input.encoding)
+    .then((res) => {
+      if (typeof res === 'string' && res.includes('Error')) {
+        notif({
+          message: res,
+          color: 'negative',
+          icon: 'sentiment_very_dissatisfied',
+          position: 'top-right',
+          spinner: false,
+          timeout: 3000
+        })
+      } else if (res && typeof res === 'number') {
+        notif({
+          message: res.toString(),
+          color: 'positive',
+          icon: 'sentiment_satisfied_alt',
+          position: 'top-right',
+          spinner: false,
+          timeout: 2000
+        })
+      } else {
+        notif({
+          message: res.toString(),
+          color: 'negative',
+          icon: 'sentiment_very_dissatisfied',
+          position: 'top-right',
+          spinner: false,
+          timeout: 2000
+        })
+      }
+    })
 }
 
 // 替换指定符号
@@ -192,35 +228,37 @@ async function replSfChar() {
     spinner: true,
     message: 'repalce specific char...'
   })
-  await window.pywebview.api.panda_repl_sf_char(input.replSfCols, input.oldChar, input.newChar, input.sep, input.encoding).then((res) => {
-    if (typeof res === 'string' && res.includes('Error')) {
-      notif({
-        message: res,
-        color: 'negative',
-        icon: 'sentiment_very_dissatisfied',
-        position: 'top-right',
-        spinner: false,
-        timeout: 3000
-      })
-    } else if (res && typeof res === 'number') {
-      notif({
-        message: res.toString(),
-        color: 'positive',
-        icon: 'sentiment_satisfied_alt',
-        position: 'top-right',
-        spinner: false,
-        timeout: 2000
-      })
-    } else {
-      notif({
-        message: res.toString(),
-        color: 'negative',
-        icon: 'sentiment_very_dissatisfied',
-        position: 'top-right',
-        spinner: false,
-        timeout: 2000
-      })
-    }
-  })
+  await window.pywebview.api
+    .panda_repl_sf_char(input.replSfCols, input.oldChar, input.newChar, input.sep, input.encoding)
+    .then((res) => {
+      if (typeof res === 'string' && res.includes('Error')) {
+        notif({
+          message: res,
+          color: 'negative',
+          icon: 'sentiment_very_dissatisfied',
+          position: 'top-right',
+          spinner: false,
+          timeout: 3000
+        })
+      } else if (res && typeof res === 'number') {
+        notif({
+          message: res.toString(),
+          color: 'positive',
+          icon: 'sentiment_satisfied_alt',
+          position: 'top-right',
+          spinner: false,
+          timeout: 2000
+        })
+      } else {
+        notif({
+          message: res.toString(),
+          color: 'negative',
+          icon: 'sentiment_very_dissatisfied',
+          position: 'top-right',
+          spinner: false,
+          timeout: 2000
+        })
+      }
+    })
 }
 </script>
