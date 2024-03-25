@@ -2,11 +2,11 @@
 ; 脚本由 Inno Setup 脚本向导 生成！
 ; 有关创建 Inno Setup 脚本文件的详细资料请查阅帮助文档！
 
-#define MyAppName "pywebview-toolkit"
+#define MyAppName "gen-template"
 #define MyAppVersion "1.0.0"
 #define MyAppPublisher "tansen"
 #define MyAppURL "https://github.com/tansen87"
-#define MyAppExeName "pywebview-toolkit.exe"
+#define MyAppExeName "gen-template.exe"
 #define MyAppAssocName MyAppName + " 文件"
 #define MyAppAssocExt ".myp"
 #define MyAppAssocKey StringChange(MyAppAssocName, " ", "") + MyAppAssocExt
@@ -28,9 +28,9 @@ ChangesAssociations=yes
 DisableProgramGroupPage=yes
 ; 移除以下行，以在管理安装模式下运行（为所有用户安装）。
 PrivilegesRequired=lowest
-OutputDir=E:\Desktop\pywebview-vue3-template-main\build
-OutputBaseFilename=pywebview-toolkit-V1.0.0_Windows
-SetupIconFile=E:\Desktop\pywebview-vue3-template-main\src_py\icon\logo.ico
+OutputDir=E:\Desktop\gen-temp\build
+OutputBaseFilename=gen-template-V1.0.0_Windows
+SetupIconFile=E:\Desktop\gen-temp\src_py\icon\logo.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -42,7 +42,7 @@ Name: "chinesesimp"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "E:\Desktop\pywebview-vue3-template-main\build\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\Desktop\gen-temp\build\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 ; 注意: 不要在任何共享系统文件上使用“Flags: ignoreversion”
 
 [Registry]

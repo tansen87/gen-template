@@ -1,9 +1,3 @@
-'''
-Author: tansen
-Date: 2024-02-15 17:13:46
-LastEditors: 
-LastEditTime: 2024-02-15 21:58:09
-'''
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 '''
@@ -25,12 +19,12 @@ class Config:
     ##
     # 程序基础配置信息
     ##
-    appName = 'pywebview-toolkit'  # 应用名称
-    appNameEN = 'pywebview-toolkit'    # 应用名称-英文（用于生成缓存文件夹，必须是英文）
+    appName = 'gen-template'  # 应用名称
+    appNameEN = 'gen-template'    # 应用名称-英文（用于生成缓存文件夹，必须是英文）
     appVersion = "V1.0.0"  # 应用版本号
     appDeveloper = "tansen"  # 应用开发者
     appBlogs = "https://github.com/tansen87"  # 个人博客
-    appPackage = 'pywebview-toolkit'    # 应用包名，用于在本地电脑生成 pywebview-toolkit.ppx 唯一文件夹
+    appPackage = 'gen-template'    # 应用包名，用于在本地电脑生成 gen-template.ppx 唯一文件夹
     appUpdateUrl = 'https://github.com/tansen87'    # 获取程序更新信息 https://api.github.com/repos/pangao1990/ppx/releases/latest
     appISSID = '56CD5B56-61AB-8E1A-DB2D-3311562E5350'    # Inno Setup 打包唯一编号。在执行 pnpm run init 之前，请设置为空，程序会自动生成唯一编号，生成后请勿修改！！！
 
