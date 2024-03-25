@@ -29,19 +29,7 @@
 
     <!-- column 2 -->
     <div class="q-gutter-y-md" style="flex-basis: 46%; max-width: 300px">
-      <q-input color="teal" label="old char">
-        <template v-slot:prepend>
-          <q-icon name="arrow_right" />
-          <q-input color="primary" label="old char" v-model="input.oldChar" style="width: 135px" />
-          <q-icon name="arrow_right" />
-          <q-input
-            color="secondary"
-            label="new char"
-            v-model="input.newChar"
-            style="width: 135px"
-          />
-        </template>
-      </q-input>
+      <q-input color="teal"></q-input>
       <q-input color="teal">
         <template v-slot:prepend>
           <q-select
@@ -55,6 +43,19 @@
             :options="encodingOptions"
             label="Encoding"
             style="width: 145px"
+          />
+        </template>
+      </q-input>
+      <q-input color="teal" label="old char">
+        <template v-slot:prepend>
+          <q-icon name="arrow_right" />
+          <q-input color="primary" label="old char" v-model="input.oldChar" style="width: 135px" />
+          <q-icon name="arrow_right" />
+          <q-input
+            color="secondary"
+            label="new char"
+            v-model="input.newChar"
+            style="width: 135px"
           />
         </template>
       </q-input>
