@@ -312,7 +312,7 @@ class Panda:
 
             # pivot, net 2 zero
             file_path = os.path.splitext(self.result[0])[0]
-            current_time_str = datetime.now().strftime('%Y-%m-%d %H%M%S')
+            current_time_str = datetime.now().strftime('%Y-%m-%d-%H%M%S')
             pt = pd.pivot_table(df, index=['Entity', 'Account Number'], values='Signed Amount EC', aggfunc='sum')
             pt.reset_index(inplace=True)
             if len(pt) < 104_0000:
@@ -409,7 +409,7 @@ class Panda:
             file_type = os.path.splitext(self.result[0])[1].lower()
             list_columns = [cols for cols in columns.split('|')]
             file_path = os.path.splitext(self.result[0])[0]
-            current_time_str = datetime.now().strftime('%Y-%m-%d %H%M%S')
+            current_time_str = datetime.now().strftime('%Y-%m-%d-%H%M%S')
             py_type = 'upper'
             if file_type in ['.xlsx', '.xlsb', '.xlsm']:
                 repl_cols = pd.read_excel(self.result[0], dtype=str, engine='calamine', usecols=list_columns)
@@ -463,7 +463,7 @@ class Panda:
             file_type = os.path.splitext(self.result[0])[1].lower()
             list_columns = [cols for cols in columns.split('|')]
             file_path = os.path.splitext(self.result[0])[0]
-            current_time_str = datetime.now().strftime('%Y-%m-%d %H%M%S')
+            current_time_str = datetime.now().strftime('%Y-%m-%d-%H%M%S')
             repl = {
                 '，': '-', '。': '-', '？': '-', '：':'-', '；':'-', '、':'-', '.':'-',
                 ',':'-', '"':'-', "'":'-', '”':'-', '’':'-', '|':'-', ':':'-', ';':'-',
@@ -517,7 +517,7 @@ class Panda:
             file_type = os.path.splitext(self.result[0])[1].lower()
             list_columns = [cols for cols in columns.split('|')]
             file_path = os.path.splitext(self.result[0])[0]
-            current_time_str = datetime.now().strftime('%Y-%m-%d %H%M%S')
+            current_time_str = datetime.now().strftime('%Y-%m-%d-%H%M%S')
             if file_type in ['.xlsx', '.xlsb', '.xlsm']:
                 repl_cols = pd.read_excel(self.result[0], dtype=str, engine='calamine', usecols=list_columns)
                 for x in list_columns:
