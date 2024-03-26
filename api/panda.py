@@ -72,6 +72,7 @@ class Panda:
         amount_select: str,
         account: str,
         account_description: str,
+        account_select: str,
         currency: str,
         currency_select: str,
         ami: str,
@@ -212,11 +213,18 @@ class Panda:
 
             df['Auto Manual or Interface'] = ami
 
-            df.rename(columns={
-                line_desciption: 'Line Description',
-                account: 'Account Number',
-                account_description: 'Account Description'
-            }, inplace=True)
+            if account_select == 'unequal':
+                df.rename(columns={
+                    line_desciption: 'Line Description',
+                    account: 'Account Number',
+                    account_description: 'Account Description'
+                }, inplace=True)
+            if account_select == 'equal':
+                df.rename(columns={
+                    line_desciption: 'Line Description',
+                    account: 'Account Number'
+                }, inplace=True)
+                df['Account Description'] = df['Account Number']
 
             if currency_select == 'column':
                 df.rename(columns={currency: 'Currency'}, inplace=True)

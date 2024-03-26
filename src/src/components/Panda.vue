@@ -137,6 +137,12 @@
       <q-input color="teal" v-model="input.account" label="Account Number">
         <template v-slot:prepend>
           <q-icon name="scatter_plot" />
+          <q-select
+            v-model="input.accountSelect"
+            :options="accountSelectOptions"
+            label="mode"
+            style="width: 70px"
+          />
         </template>
       </q-input>
       <q-input color="teal">
@@ -184,6 +190,12 @@
       <q-input color="teal" v-model="input.accountDescription" label="Account Description">
         <template v-slot:prepend>
           <q-icon name="scatter_plot" />
+          <q-select
+            v-model="input.accountSelect"
+            :options="accountSelectOptions"
+            label="mode"
+            style="width: 70px"
+          />
         </template>
       </q-input>
       <q-input color="teal">
@@ -239,6 +251,7 @@ const input = reactive({
   amountSelect: 'd|c',
   account: '科目编号',
   accountDescription: '科目名称',
+  accountSelect: 'unequal',
   currency: 'CNY',
   currencySelect: 'input',
   ami: 'Manual',
@@ -254,6 +267,7 @@ const dateSelectOptions = ['equal', 'unequal']
 const userSelectOptions = ['equal', 'unequal']
 const userLangOptions = ['EN', 'CN']
 const amountSelectOptions = ['d|c', 'amount']
+const accountSelectOptions = ['equal', 'unequal']
 const currencySelectOptions = ['column', 'input']
 const amiSelectOptions = ['Auto', 'Manual', 'Interface']
 const entityNumberOptions = ['single', 'multi']
@@ -302,6 +316,7 @@ async function process() {
       input.amountSelect,
       input.account,
       input.accountDescription,
+      input.accountSelect,
       input.currency,
       input.currencySelect,
       input.ami,
