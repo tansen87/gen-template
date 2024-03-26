@@ -111,8 +111,8 @@ const input = reactive({
   cn2pinyinCols: 'A|B|C',
   oldChar: '',
   newChar: '',
-  replCols: 'A',
-  replSfCols: 'A',
+  replCols: 'A|B|C',
+  replSfCols: 'A|B|C',
   sep: ',',
   encoding: 'utf-8'
 })

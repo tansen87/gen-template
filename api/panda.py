@@ -474,12 +474,14 @@ class Panda:
                 for x in list_columns:
                     for old_text, new_text in repl.items():
                         repl_cols[x] = repl_cols[x].str.replace(old_text, new_text)
+                    repl_cols[x] = repl_cols[x].apply(lambda x: x[: 200])
                 repl_cols.to_excel(f'{file_path}-replChar {current_time_str}.xlsx', index=False, engine='xlsxwriter')
             if file_type in ['.csv', 'tsv', '.dat', '.spext', '.txt']:
                 repl_cols = pd.read_csv(self.result[0], dtype=str, sep=sep, encoding=encoding)
                 for x in list_columns:
                     for old_text, new_text in repl.items():
                         repl_cols[x] = repl_cols[x].str.replace(old_text, new_text)
+                    repl_cols[x] = repl_cols[x].apply(lambda x: x[: 200])
                 repl_cols.to_csv(f'{file_path}-replChar {current_time_str}.csv', index=False, sep=sep, encoding=encoding)
             
             end_time = time.time()
