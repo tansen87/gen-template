@@ -24,7 +24,7 @@ class Config:
     appVersion = "V1.0.0"  # 应用版本号
     appDeveloper = "tansen"  # 应用开发者
     appBlogs = "https://github.com/tansen87"  # 个人博客
-    appPackage = 'gen-template'    # 应用包名，用于在本地电脑生成 gen-template.ppx 唯一文件夹
+    appPackage = 'gen-template'    # 应用包名，用于在本地电脑生成 gen-template 唯一文件夹
     appUpdateUrl = 'https://github.com/tansen87'    # 获取程序更新信息 https://api.github.com/repos/pangao1990/ppx/releases/latest
     appISSID = '56CD5B56-61AB-8E1A-DB2D-3311562E5350'    # Inno Setup 打包唯一编号。在执行 pnpm run init 之前，请设置为空，程序会自动生成唯一编号，生成后请勿修改！！！
 

@@ -1,7 +1,6 @@
 pywebview==4.4.1
 pyinstaller==6.2.0
 tinyaes==1.0.4
-alembic==1.10.2
 pandas==2.2.1
 numpy==1.26.4
 pypinyin==0.50.0
@@ -9,4 +8,3 @@ openpyxl==3.1.2
 python-calamine==0.2.0
 xlsxwriter==3.2.0
 colorama==0.4.6
-duckdb==0.10.0

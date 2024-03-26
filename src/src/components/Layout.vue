@@ -14,7 +14,6 @@
 
       <q-tabs align="left" v-model="tab">
         <q-tab name="Panda" label="Panda" />
-        <q-tab name="Duck" label="Duck" />
         <q-tab name="Tools" label="Tools" />
       </q-tabs>
     </q-header>
@@ -30,7 +29,6 @@
 <script setup>
 import { ref } from 'vue'
 import Panda from './Panda.vue'
-import Duck from './Duck.vue'
 import Tools from './Tools.vue'
 
 import { useQuasar } from 'quasar'
@@ -40,7 +38,6 @@ const $q = useQuasar()
 const tab = ref('Panda')
 const tabs = {
   Panda: Panda,
-  Duck: Duck,
   Tools: Tools,
 }
 
