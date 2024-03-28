@@ -86,6 +86,23 @@ class Panda:
             start_time = time.time()
             file_type = os.path.splitext(self.result[0])[1].lower()
 
+            # 检查列是否存在
+            scan_cols = []
+            if file_type in ['.xlsx', '.xlsb', '.xlsm']:
+                scan = pd.read_excel(self.result[0], dtype=str, engine='calamine', nrows=5)
+                scan_cols = scan.columns
+            if file_type in ['.csv', '.tsv', '.dat', '.spext', '.txt']:
+                scan = pd.read_csv(self.result[0], dtype=str, sep=sep, encoding=encoding, nrows=5)
+                scan_cols = scan.columns
+            input_cols = [
+                entity, company, journal_number, journal_type, date_effective, date_entered,
+                user_entered, user_updated, line_description, account, account_description,
+                amount.split('|')[0] if amount_select == 'd|c' else amount,
+                amount.split('|')[1] if amount_select == 'd|c' else amount]
+            for x in input_cols:
+                if x not in scan_cols and x != '':
+                    raise NameError(f"<{x}> not found.")
+
             # 读取excel
             if file_type in ['.xlsx', '.xlsb', '.xlsm']:
                 df = pd.read_excel(self.result[0], dtype=str, engine='calamine')
@@ -184,8 +201,8 @@ class Panda:
                     if user_entered != '':
                         df.rename(columns={user_entered: 'UserID Entered'}, inplace=True)
                         df['UserID Entered'] = df['UserID Entered'].apply(
-                            lambda value: ''.join(lazy_pinyin(value, style=Style.NORMAL)) if isinstance(value,
-                                                                                                        str) else value)
+                            lambda value: ''.join(lazy_pinyin(
+                                value, style=Style.NORMAL)) if isinstance(value, str) else value)
                         df['UserID Entered'] = df['UserID Entered'].apply(
                             lambda value: value.upper() if isinstance(value, str) else value)
                         df['Name of User Entered'] = df['UserID Entered']
@@ -194,8 +211,8 @@ class Panda:
                     if user_updated != '':
                         df.rename(columns={user_updated: 'UserID Updated'}, inplace=True)
                         df['UserID Updated'] = df['UserID Updated'].apply(
-                            lambda value: ''.join(lazy_pinyin(value, style=Style.NORMAL)) if isinstance(value,
-                                                                                                        str) else value)
+                            lambda value: ''.join(
+                                lazy_pinyin(value, style=Style.NORMAL)) if isinstance(value, str) else value)
                         df['UserID Updated'] = df['UserID Updated'].apply(
                             lambda value: value.upper() if isinstance(value, str) else value)
                         df['Name of User Updated'] = df['UserID Updated']
@@ -203,8 +220,8 @@ class Panda:
                     if user_entered != '' and user_updated == '':
                         df.rename(columns={user_entered: 'UserID Entered'}, inplace=True)
                         df['UserID Entered'] = df['UserID Entered'].apply(
-                            lambda value: ''.join(lazy_pinyin(value, style=Style.NORMAL)) if isinstance(value,
-                                                                                                        str) else value)
+                            lambda value: ''.join(
+                                lazy_pinyin(value, style=Style.NORMAL)) if isinstance(value, str) else value)
                         df['UserID Entered'] = df['UserID Entered'].apply(
                             lambda value: value.upper() if isinstance(value, str) else value)
                         df['Name of User Entered'] = df['UserID Entered']
@@ -213,8 +230,8 @@ class Panda:
                     if user_updated != '' and user_entered == '':
                         df.rename(columns={user_updated: 'UserID Updated'}, inplace=True)
                         df['UserID Updated'] = df['UserID Updated'].apply(
-                            lambda value: ''.join(lazy_pinyin(value, style=Style.NORMAL)) if isinstance(value,
-                                                                                                        str) else value)
+                            lambda value: ''.join(
+                                lazy_pinyin(value, style=Style.NORMAL)) if isinstance(value, str) else value)
                         df['UserID Updated'] = df['UserID Updated'].apply(
                             lambda value: value.upper() if isinstance(value, str) else value)
                         df['Name of User Updated'] = df['UserID Updated']
@@ -245,6 +262,7 @@ class Panda:
 
             if amount_select == 'amount':
                 df.rename(columns={amount: 'Signed Amount EC'}, inplace=True)
+                df.fillna({'Signed Amount EC': 0}, inplace=True)
             if amount_select == 'd|c':
                 debit = amount.split('|')[0]
                 credit = amount.split('|')[1]
