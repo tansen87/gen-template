@@ -8,6 +8,7 @@ import time
 import json
 from typing import Union
 from datetime import datetime
+from decimal import Decimal
 # import traceback
 
 import webview
@@ -49,36 +50,36 @@ class Panda:
             return df_json
         except Exception as e:
             Log.error(repr(e))
-    
+
     def panda_process(
-        self,
-        entity: str,
-        entity_select: str,
-        entity_lang: str,
-        company: str,
-        company_select: str,
-        journal_number: str,
-        jn_connect: str,
-        journal_type: str,
-        date_effective: str,
-        date_entered: str,
-        date_select: str,
-        user_enterd: str,
-        user_updated: str,
-        user_select: str,
-        user_lang: str,
-        line_desciption: str,
-        amount: str,
-        amount_select: str,
-        account: str,
-        account_description: str,
-        account_select: str,
-        currency: str,
-        currency_select: str,
-        ami: str,
-        entity_number: str,
-        sep: str,
-        encoding: str
+            self,
+            entity: str,
+            entity_select: str,
+            entity_lang: str,
+            company: str,
+            company_select: str,
+            journal_number: str,
+            jn_connect: str,
+            journal_type: str,
+            date_effective: str,
+            date_entered: str,
+            date_select: str,
+            user_entered: str,
+            user_updated: str,
+            user_select: str,
+            user_lang: str,
+            line_description: str,
+            amount: str,
+            amount_select: str,
+            account: str,
+            account_description: str,
+            account_select: str,
+            currency: str,
+            currency_select: str,
+            ami: str,
+            entity_number: str,
+            sep: str,
+            encoding: str
     ) -> Union[float, str]:
         """ 生成模板 """
         try:
@@ -107,7 +108,8 @@ class Panda:
                     df.rename(columns={entity: 'Entity'}, inplace=True)
                     df['Entity'] = df['Entity'].astype(str)
                     df['Entity'] = df['Entity'].apply(
-                        lambda value: ''.join(lazy_pinyin(value, style=Style.INITIALS)) if isinstance(value, str) else value)
+                        lambda value: ''.join(
+                            lazy_pinyin(value, style=Style.INITIALS)) if isinstance(value, str) else value)
                     df['Entity'] = df['Entity'].apply(lambda value: value.upper() if isinstance(value, str) else value)
             if entity_select == 'input':
                 df['Entity'] = entity
@@ -128,7 +130,7 @@ class Panda:
                 df['Financial Period'] = df['Financial Period'].astype("uint8")
                 df['Date Effective'] = df['Date Effective'].dt.strftime("%d/%m/%Y")
                 df['Date Entered'] = df['Date Effective']
-            if date_select == 'nequal':
+            if date_select == 'unequal':
                 df.rename(columns={
                     date_effective: 'Date Effective',
                     date_entered: 'Date Entered'
@@ -153,10 +155,10 @@ class Panda:
 
             if user_lang == 'EN':
                 if user_select == 'unequal':
-                    if user_enterd == '':
+                    if user_entered == '':
                         df['UserID Entered'] = None
-                    if user_enterd != '':
-                        df.rename(columns={user_enterd: 'UserID Entered'}, inplace=True)
+                    if user_entered != '':
+                        df.rename(columns={user_entered: 'UserID Entered'}, inplace=True)
                         df['Name of User Entered'] = df['UserID Entered']
                     if user_updated == '':
                         df['UserID Updated'] = None
@@ -164,12 +166,12 @@ class Panda:
                         df.rename(columns={user_updated: 'UserID Updated'}, inplace=True)
                         df['Name of User Updated'] = df['UserID Updated']
                 if user_select == 'equal':
-                    if user_enterd != '' and user_updated == '':
-                        df.rename(columns={user_enterd: 'UserID Entered'}, inplace=True)
+                    if user_entered != '' and user_updated == '':
+                        df.rename(columns={user_entered: 'UserID Entered'}, inplace=True)
                         df['Name of User Entered'] = df['UserID Entered']
                         df['UserID Updated'] = df['UserID Entered']
                         df['Name of User Updated'] = df['UserID Entered']
-                    if user_updated != '' and user_enterd == '':
+                    if user_updated != '' and user_entered == '':
                         df.rename(columns={user_updated: 'UserID Updated'}, inplace=True)
                         df['Name of User Updated'] = df['UserID Updated']
                         df['UserID Entered'] = df['UserID Updated']
@@ -177,36 +179,44 @@ class Panda:
 
             if user_lang == 'CN':
                 if user_select == 'unequal':
-                    if user_enterd == '':
+                    if user_entered == '':
                         df['UserID Entered'] = None
-                    if user_enterd != '':
-                        df.rename(columns={user_enterd: 'UserID Entered'}, inplace=True)
+                    if user_entered != '':
+                        df.rename(columns={user_entered: 'UserID Entered'}, inplace=True)
                         df['UserID Entered'] = df['UserID Entered'].apply(
-                            lambda value: ''.join(lazy_pinyin(value, style=Style.NORMAL)) if isinstance(value, str) else value)
-                        df['UserID Entered'] = df['UserID Entered'].apply(lambda value: value.upper() if isinstance(value, str) else value)
+                            lambda value: ''.join(lazy_pinyin(value, style=Style.NORMAL)) if isinstance(value,
+                                                                                                        str) else value)
+                        df['UserID Entered'] = df['UserID Entered'].apply(
+                            lambda value: value.upper() if isinstance(value, str) else value)
                         df['Name of User Entered'] = df['UserID Entered']
                     if user_updated == '':
                         df['UserID Updated'] = None
                     if user_updated != '':
                         df.rename(columns={user_updated: 'UserID Updated'}, inplace=True)
                         df['UserID Updated'] = df['UserID Updated'].apply(
-                            lambda value: ''.join(lazy_pinyin(value, style=Style.NORMAL)) if isinstance(value, str) else value)
-                        df['UserID Updated'] = df['UserID Updated'].apply(lambda value: value.upper() if isinstance(value, str) else value)
+                            lambda value: ''.join(lazy_pinyin(value, style=Style.NORMAL)) if isinstance(value,
+                                                                                                        str) else value)
+                        df['UserID Updated'] = df['UserID Updated'].apply(
+                            lambda value: value.upper() if isinstance(value, str) else value)
                         df['Name of User Updated'] = df['UserID Updated']
                 if user_select == 'equal':
-                    if user_enterd != '' and user_updated == '':
-                        df.rename(columns={user_enterd: 'UserID Entered'}, inplace=True)
+                    if user_entered != '' and user_updated == '':
+                        df.rename(columns={user_entered: 'UserID Entered'}, inplace=True)
                         df['UserID Entered'] = df['UserID Entered'].apply(
-                            lambda value: ''.join(lazy_pinyin(value, style=Style.NORMAL)) if isinstance(value, str) else value)
-                        df['UserID Entered'] = df['UserID Entered'].apply(lambda value: value.upper() if isinstance(value, str) else value)
+                            lambda value: ''.join(lazy_pinyin(value, style=Style.NORMAL)) if isinstance(value,
+                                                                                                        str) else value)
+                        df['UserID Entered'] = df['UserID Entered'].apply(
+                            lambda value: value.upper() if isinstance(value, str) else value)
                         df['Name of User Entered'] = df['UserID Entered']
                         df['UserID Updated'] = df['UserID Entered']
                         df['Name of User Updated'] = df['UserID Entered']
-                    if user_updated != '' and user_enterd == '':
+                    if user_updated != '' and user_entered == '':
                         df.rename(columns={user_updated: 'UserID Updated'}, inplace=True)
                         df['UserID Updated'] = df['UserID Updated'].apply(
-                            lambda value: ''.join(lazy_pinyin(value, style=Style.NORMAL)) if isinstance(value, str) else value)
-                        df['UserID Updated'] = df['UserID Updated'].apply(lambda value: value.upper() if isinstance(value, str) else value)
+                            lambda value: ''.join(lazy_pinyin(value, style=Style.NORMAL)) if isinstance(value,
+                                                                                                        str) else value)
+                        df['UserID Updated'] = df['UserID Updated'].apply(
+                            lambda value: value.upper() if isinstance(value, str) else value)
                         df['Name of User Updated'] = df['UserID Updated']
                         df['UserID Entered'] = df['UserID Updated']
                         df['Name of User Entered'] = df['UserID Updated']
@@ -215,13 +225,13 @@ class Panda:
 
             if account_select == 'unequal':
                 df.rename(columns={
-                    line_desciption: 'Line Description',
+                    line_description: 'Line Description',
                     account: 'Account Number',
                     account_description: 'Account Description'
                 }, inplace=True)
             if account_select == 'equal':
                 df.rename(columns={
-                    line_desciption: 'Line Description',
+                    line_description: 'Line Description',
                     account: 'Account Number'
                 }, inplace=True)
                 df['Account Description'] = df['Account Number']
@@ -240,7 +250,7 @@ class Panda:
                 credit = amount.split('|')[1]
                 df[debit] = df[debit].str.strip()
                 df[credit] = df[credit].str.strip()
-                df.fillna({debit:0, credit:0}, inplace=True)
+                df.fillna({debit: 0, credit: 0}, inplace=True)
                 df[debit] = df[debit].astype(float)
                 df[credit] = df[credit].astype(float)
                 df['Signed Amount EC'] = df[debit] - df[credit]
@@ -264,7 +274,7 @@ class Panda:
 
             # 添加debit credit, 默认原币=本位币
             df['Unsigned Debit Amount EC'] = np.where(df['Signed Amount EC'] > 0, df['Signed Amount EC'], 0)
-            df['Unsigned Credit Amount EC'] = np.where(df['Signed Amount EC'] < 0, df['Signed Amount EC']*-1, 0)
+            df['Unsigned Credit Amount EC'] = np.where(df['Signed Amount EC'] < 0, df['Signed Amount EC'] * -1, 0)
             df['Signed Journal Amount'] = df['Signed Amount EC']
             df["Unsigned Debit Amount"] = df['Unsigned Debit Amount EC']
             df["Unsigned Credit Amount"] = df['Unsigned Credit Amount EC']
@@ -272,9 +282,9 @@ class Panda:
 
             # 替换掉Line Description中的特殊符号,保留200位
             repl = {
-                '，': '-', '。': '-', '？': '-', '：':'-', '；':'-', '、':'-', '.':'-',
-                ',':'-', '"':'-', "'":'-', '”':'-', '’':'-', '|':'-', ':':'-', ';':'-',
-                '\r':'-', '\n':'-', '\\':'-', '/':'-'
+                '，': '-', '。': '-', '？': '-', '：': '-', '；': '-', '、': '-', '.': '-',
+                ',': '-', '"': '-', "'": '-', '”': '-', '’': '-', '|': '-', ':': '-', ';': '-',
+                '\r': '-', '\n': '-', '\\': '-', '/': '-'
             }
             for old_text, new_text in repl.items():
                 df['Line Description'] = df['Line Description'].str.replace(old_text, new_text)
@@ -285,7 +295,7 @@ class Panda:
             if entity_number == 'single':
                 df = df.sort_values(by='Journal Number', ascending=True)
             if entity_number == 'multi':
-                df = df.sort_values(by=['Entity','Journal Number'], ascending=[True, True])
+                df = df.sort_values(by=['Entity', 'Journal Number'], ascending=[True, True])
             Log.info("排序成功")
 
             # 添加Line Number
@@ -296,25 +306,20 @@ class Panda:
             df_len = len(df)
             df2arr = np.array(df)
             for value in range(1, df_len):
-                if df2arr[value][jn] == df2arr[value-1][jn]:
-                    df2arr[value][ln] = df2arr[value-1][ln] + 1
+                if df2arr[value][jn] == df2arr[value - 1][jn]:
+                    df2arr[value][ln] = df2arr[value - 1][ln] + 1
                 else:
                     df2arr[value][ln] = int(1)
             df = pd.DataFrame(df2arr)
             df.columns = df_cols
             Log.info("成功添加Line Number")
 
-            # 金额列保留两位小数
-            df = df.round(
-                {'Unsigned Debit Amount': 2, 'Unsigned Credit Amount': 2, "Signed Journal Amount": 2,
-                "Unsigned Debit Amount EC": 2, "Unsigned Credit Amount EC": 2, "Signed Amount EC": 2})
-            Log.info("金额列成功保留两位小数")
-
             # pivot, net 2 zero
             file_path = os.path.splitext(self.result[0])[0]
             current_time_str = datetime.now().strftime('%Y-%m-%d-%H%M%S')
             pt = pd.pivot_table(df, index=['Entity', 'Account Number'], values='Signed Amount EC', aggfunc='sum')
             pt.reset_index(inplace=True)
+            pt['Signed Amount EC'] = pt['Signed Amount EC'].apply(lambda x: round(Decimal(str(x)), 2))
             if len(pt) < 104_0000:
                 pt.to_excel(f"{file_path}_pivot {current_time_str}.xlsx", index=False)
             else:
@@ -322,10 +327,20 @@ class Panda:
 
             pt = pd.pivot_table(df, index=['Entity', 'Journal Number'], values='Signed Amount EC', aggfunc='sum')
             pt.reset_index(inplace=True)
+            pt['Signed Amount EC'] = pt['Signed Amount EC'].apply(lambda x: round(Decimal(str(x)), 2))
             if len(pt) < 104_0000:
                 pt.to_excel(f"{file_path}_Net2Zero {current_time_str}.xlsx", index=False)
             else:
                 pt.to_csv(f'{file_path}_Net2Zero {current_time_str}.csv', index=False, sep='|')
+
+            # 金额列保留两位小数
+            df['Unsigned Debit Amount'] = df['Unsigned Debit Amount'].apply(lambda x: round(Decimal(str(x)), 2))
+            df['Unsigned Credit Amount'] = df['Unsigned Credit Amount'].apply(lambda x: round(Decimal(str(x)), 2))
+            df['Signed Journal Amount'] = df['Signed Journal Amount'].apply(lambda x: round(Decimal(str(x)), 2))
+            df['Unsigned Debit Amount EC'] = df['Unsigned Debit Amount EC'].apply(lambda x: round(Decimal(str(x)), 2))
+            df['Unsigned Credit Amount EC'] = df['Unsigned Credit Amount EC'].apply(lambda x: round(Decimal(str(x)), 2))
+            df['Signed Amount EC'] = df['Signed Amount EC'].apply(lambda x: round(Decimal(str(x)), 2))
+            Log.info("金额列成功保留两位小数")
 
             # 写入txt
             df.to_csv(f'{file_path}_GL_uploadTemplate {current_time_str}.txt', index=False, sep='|')
@@ -398,10 +413,10 @@ class Panda:
             Log.error(repr(e))
 
     def panda_cn2pinyin(
-        self,
-        columns: Union[str, list[str]],
-        sep: str,
-        encoding: str
+            self,
+            columns: Union[str, list[str]],
+            sep: str,
+            encoding: str
     ) -> Union[float, str]:
         """ 将中文列替换为拼音 """
         try:
@@ -416,7 +431,7 @@ class Panda:
                 for x in list_columns:
                     repl_cols[x] = repl_cols[x].astype(str)
                     repl_cols[x] = repl_cols[x].apply(
-                        lambda value: pinyin(value, style=Style.NORMAL)[0] if py_type == "abbre" else ''.join(
+                        lambda value: pinyin(value, style=Style.NORMAL)[0] if py_type == "abbr" else ''.join(
                             [i[0].upper() for i in pinyin(value, style=Style.NORMAL)]
                         )
                     )
@@ -426,12 +441,12 @@ class Panda:
                 for x in list_columns:
                     repl_cols[x] = repl_cols[x].astype(str)
                     repl_cols[x] = repl_cols[x].apply(
-                        lambda value: pinyin(value, style=Style.NORMAL)[0] if py_type == "abbre" else ''.join(
+                        lambda value: pinyin(value, style=Style.NORMAL)[0] if py_type == "abbr" else ''.join(
                             [i[0].upper() for i in pinyin(value, style=Style.NORMAL)]
                         )
                     )
                 repl_cols.to_csv(f'{file_path}-EN {current_time_str}.csv', index=False, sep=sep, encoding=encoding)
-            
+
             end_time = time.time()
             elapsed_time = round(end_time - start_time, 2)
 
@@ -450,12 +465,12 @@ class Panda:
             Log.error(repr(e))
             json_error = json.dumps(repr(e), ensure_ascii=False, indent=2)
             return json_error
-    
+
     def panda_repl_char(
-        self,
-        columns: Union[str, list[str]],
-        sep: str,
-        encoding: str
+            self,
+            columns: Union[str, list[str]],
+            sep: str,
+            encoding: str
     ) -> Union[float, str]:
         """ 替换掉特殊符号 """
         try:
@@ -465,9 +480,9 @@ class Panda:
             file_path = os.path.splitext(self.result[0])[0]
             current_time_str = datetime.now().strftime('%Y-%m-%d-%H%M%S')
             repl = {
-                '，': '-', '。': '-', '？': '-', '：':'-', '；':'-', '、':'-', '.':'-',
-                ',':'-', '"':'-', "'":'-', '”':'-', '’':'-', '|':'-', ':':'-', ';':'-',
-                '\r':'-', '\n':'-', '\\':'-', '/':'-'
+                '，': '-', '。': '-', '？': '-', '：': '-', '；': '-', '、': '-', '.': '-',
+                ',': '-', '"': '-', "'": '-', '”': '-', '’': '-', '|': '-', ':': '-', ';': '-',
+                '\r': '-', '\n': '-', '\\': '-', '/': '-'
             }
             if file_type in ['.xlsx', '.xlsb', '.xlsm']:
                 repl_cols = pd.read_excel(self.result[0], dtype=str, engine='calamine', usecols=list_columns)
@@ -482,8 +497,9 @@ class Panda:
                     for old_text, new_text in repl.items():
                         repl_cols[x] = repl_cols[x].str.replace(old_text, new_text)
                     repl_cols[x] = repl_cols[x].apply(lambda x: x[: 200])
-                repl_cols.to_csv(f'{file_path}-replChar {current_time_str}.csv', index=False, sep=sep, encoding=encoding)
-            
+                repl_cols.to_csv(f'{file_path}-replChar {current_time_str}.csv', index=False, sep=sep,
+                                 encoding=encoding)
+
             end_time = time.time()
             elapsed_time = round(end_time - start_time, 2)
 
@@ -502,14 +518,14 @@ class Panda:
             Log.error(repr(e))
             json_error = json.dumps(repr(e), ensure_ascii=False, indent=2)
             return json_error
-    
+
     def panda_repl_sf_char(
-        self,
-        columns: Union[str, list[str]],
-        old_char: str,
-        new_char: str,
-        sep: str,
-        encoding: str
+            self,
+            columns: Union[str, list[str]],
+            old_char: str,
+            new_char: str,
+            sep: str,
+            encoding: str
     ) -> Union[float, str]:
         """ 替换掉指定符号 """
         try:
@@ -527,8 +543,9 @@ class Panda:
                 repl_cols = pd.read_csv(self.result[0], dtype=str, sep=sep, encoding=encoding, )
                 for x in list_columns:
                     repl_cols[x] = repl_cols[x].str.replace(old_char, new_char)
-                repl_cols.to_csv(f'{file_path}-replSfChar {current_time_str}.csv', index=False, sep=sep, encoding=encoding)
-            
+                repl_cols.to_csv(f'{file_path}-replSfChar {current_time_str}.csv', index=False, sep=sep,
+                                 encoding=encoding)
+
             end_time = time.time()
             elapsed_time = round(end_time - start_time, 2)
 

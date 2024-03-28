@@ -182,7 +182,7 @@ async function replChar() {
     group: false,
     timeout: 0,
     spinner: true,
-    message: 'repalce char...'
+    message: 'replace char...'
   })
   await window.pywebview.api
     .panda_repl_char(input.replCols, input.sep, input.encoding)
@@ -227,7 +227,7 @@ async function replSfChar() {
     group: false,
     timeout: 0,
     spinner: true,
-    message: 'repalce specific char...'
+    message: 'replace specific char...'
   })
   await window.pywebview.api
     .panda_repl_sf_char(input.replSfCols, input.oldChar, input.newChar, input.sep, input.encoding)

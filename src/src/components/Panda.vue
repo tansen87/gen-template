@@ -33,7 +33,7 @@
           />
         </template>
       </q-input>
-      <q-input color="teal" v-model="input.lineDesciption" label="Line Desciption">
+      <q-input color="teal" v-model="input.lineDescription" label="Line Description">
         <template v-slot:prepend>
           <q-icon name="payments" />
         </template>
@@ -117,7 +117,7 @@
           />
         </template>
       </q-input>
-      <q-input color="teal" v-model="input.userEnterd" label="User Enterd">
+      <q-input color="teal" v-model="input.userEntered" label="User Entered">
         <template v-slot:prepend>
           <q-icon name="people" />
           <q-select
@@ -242,11 +242,11 @@ const input = reactive({
   dateEffective: '记账时间',
   dateEntered: '',
   dateSelect: 'equal',
-  userEnterd: '',
+  userEntered: '',
   userUpdated: '',
   userSelect: 'unequal',
   userLang: 'EN',
-  lineDesciption: '业务说明',
+  lineDescription: '业务说明',
   amount: '借方发生额|贷方发生额',
   amountSelect: 'd|c',
   account: '科目编号',
@@ -307,11 +307,11 @@ async function process() {
       input.dateEffective,
       input.dateEntered,
       input.dateSelect,
-      input.userEnterd,
+      input.userEntered,
       input.userUpdated,
       input.userSelect,
       input.userLang,
-      input.lineDesciption,
+      input.lineDescription,
       input.amount,
       input.amountSelect,
       input.account,
