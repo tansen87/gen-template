@@ -224,7 +224,7 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
-import { useQuasar } from 'quasar'
+import { useQuasar, QSpinnerGears } from 'quasar'
 
 const $q = useQuasar()
 
@@ -291,7 +291,7 @@ async function process() {
     position: 'top-right',
     group: false,
     timeout: 0,
-    spinner: true,
+    spinner: QSpinnerGears,
     message: 'running...'
   })
   try {
@@ -325,44 +325,70 @@ async function process() {
       input.encoding
     )
     if (typeof res === 'string' && res.includes('Error')) {
-      notif({
+      let notifId = notif({
         message: res,
         color: 'negative',
         icon: 'sentiment_very_dissatisfied',
-        position: 'top-right',
         spinner: false,
-        timeout: 3000
+        actions: [
+          {
+            label: 'ok',
+            color: 'white',
+            handler: () => {
+              notifId = null
+            }
+          }
+        ]
       })
-      console.log('catch error')
     } else if (res && typeof res === 'number') {
-      notif({
-        message: res.toString(),
+      let notifId = notif({
+        message: 'cost time: ' + res.toString(),
         color: 'positive',
         icon: 'sentiment_satisfied_alt',
-        position: 'top-right',
         spinner: false,
-        timeout: 2000
+        actions: [
+          {
+            label: 'ok',
+            color: 'white',
+            handler: () => {
+              notifId = null
+            }
+          }
+        ]
       })
     } else {
-      notif({
+      let notifId = notif({
         message: res.toString(),
         color: 'negative',
         icon: 'sentiment_very_dissatisfied',
-        position: 'top-right',
         spinner: false,
-        timeout: 2000
+        actions: [
+          {
+            label: 'ok',
+            color: 'white',
+            handler: () => {
+              notifId = null
+            }
+          }
+        ]
       })
     }
   } catch (error) {
-    notif({
-      message: error.message,
+    let notifId = notif({
+      message: error,
       color: 'negative',
       icon: 'sentiment_very_dissatisfied',
-      position: 'top-right',
       spinner: false,
-      timeout: 3000
+      actions: [
+        {
+          label: 'ok',
+          color: 'white',
+          handler: () => {
+            notifId = null
+          }
+        }
+      ]
     })
-    console.log('error')
   }
 }
 </script>
