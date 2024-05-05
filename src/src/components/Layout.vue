@@ -1,22 +1,16 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-header elevated class="bg-primary text-white" height-hint="98">
-      <q-toolbar>
-        <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
-          </q-avatar>
-          Generate JET Template
-        </q-toolbar-title>
-
+    <div class="row no-wrap">
+      <div class="col">
+        <q-tabs align="left" v-model="tab" class="text-right">
+          <q-tab name="Panda" label="Panda" />
+          <q-tab name="Tools" label="Tools" />
+        </q-tabs>
+      </div>
+      <div class="col-auto">
         <q-btn flat round dense :icon="theme" @click="toggleTheme" />
-      </q-toolbar>
-
-      <q-tabs align="left" v-model="tab">
-        <q-tab name="Panda" label="Panda" />
-        <q-tab name="Tools" label="Tools" />
-      </q-tabs>
-    </q-header>
+      </div>
+    </div>
 
     <q-page-container>
       <KeepAlive>
