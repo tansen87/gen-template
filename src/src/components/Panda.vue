@@ -86,19 +86,13 @@
           />
         </template>
       </q-input>
-      <q-input color="teal" label="Amount">
+      <q-input color="teal">
         <template v-slot:prepend>
           <q-select
             v-model="input.ami"
             :options="amiSelectOptions"
             label="Auto Manual Interface"
-            style="width: 175px"
-          />
-          <q-select
-            v-model="input.entityNumber"
-            :options="entityNumberOptions"
-            label="Number of entities"
-            style="width: 175px"
+            style="width: 350px"
           />
         </template>
       </q-input>
@@ -255,7 +249,6 @@ const input = reactive({
   currency: 'CNY',
   currencySelect: 'input',
   ami: 'Manual',
-  entityNumber: 'single',
   sep: ',',
   encoding: 'utf-8'
 })
@@ -270,7 +263,6 @@ const amountSelectOptions = ['d|c', 'amount']
 const accountSelectOptions = ['equal', 'unequal']
 const currencySelectOptions = ['column', 'input']
 const amiSelectOptions = ['Auto', 'Manual', 'Interface']
-const entityNumberOptions = ['single', 'multi']
 const sepOptions = [',', '|', '\\t', ';']
 const encodingOptions = ['utf-8', 'utf_8_sig', 'utf-16le', 'gbk']
 
@@ -320,7 +312,6 @@ async function process() {
       input.currency,
       input.currencySelect,
       input.ami,
-      input.entityNumber,
       input.sep,
       input.encoding
     )
