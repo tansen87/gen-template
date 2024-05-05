@@ -77,7 +77,6 @@ class Panda:
             currency: str,
             currency_select: str,
             ami: str,
-            entity_number: str,
             sep: str,
             encoding: str
     ) -> Union[float, str]:
@@ -310,10 +309,7 @@ class Panda:
             Log.info("成功替换特殊符号,且保留200位")
 
             # 排序
-            if entity_number == 'single':
-                df = df.sort_values(by='Journal Number', ascending=True)
-            if entity_number == 'multi':
-                df = df.sort_values(by=['Entity', 'Journal Number'], ascending=[True, True])
+            df.sort_values(by=['Entity', 'Journal Number'], ascending=[True, True], inplace=True)
             Log.info("排序成功")
 
             # 添加Line Number
