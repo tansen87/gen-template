@@ -303,6 +303,7 @@ class Panda:
                 ',': '-', '"': '-', "'": '-', '”': '-', '’': '-', '|': '-', ':': '-', ';': '-',
                 '\r': '-', '\n': '-', '\\': '-', '/': '-'
             }
+            df['Line Description'] = df['Line Description'].astype(str)
             for old_text, new_text in repl.items():
                 df['Line Description'] = df['Line Description'].str.replace(old_text, new_text)
             df['Line Description'] = df['Line Description'].apply(lambda x: x[: 200])
@@ -357,7 +358,7 @@ class Panda:
             Log.info("金额列成功保留两位小数")
 
             # 写入txt
-            df.to_csv(f'{file_path}_GL_uploadTemplate {current_time_str}.txt', index=False, sep='|')
+            df.to_csv(f'{file_path}_GL-upload {current_time_str}.txt', index=False, sep='|', encoding='utf-16le')
             Log.info('成功写入txt')
 
             end_time = time.time()
