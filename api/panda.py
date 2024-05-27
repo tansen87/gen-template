@@ -358,7 +358,7 @@ class Panda:
             Log.info("金额列成功保留两位小数")
 
             # 写入txt
-            df.to_csv(f'{file_path}_GL-upload {current_time_str}.txt', index=False, sep='|', encoding='utf-16le')
+            df.to_csv(f'{file_path}_GL-upload {current_time_str}.txt', index=False, sep='|', encoding='utf-16')
             Log.info('成功写入txt')
 
             end_time = time.time()
